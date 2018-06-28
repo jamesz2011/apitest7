@@ -1,0 +1,20 @@
+--2018-05-23 15:27:03--  http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
+Resolving download.oracle.com (download.oracle.com)... 23.218.44.119
+Connecting to download.oracle.com (download.oracle.com)|23.218.44.119|:80... connected.
+HTTP request sent, awaiting response... 302 Moved Temporarily
+Location: https://edelivery.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz [following]
+--2018-05-23 15:27:03--  https://edelivery.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
+Resolving edelivery.oracle.com (edelivery.oracle.com)... 184.26.250.202, 2600:1417:e:28e::2d3e, 2600:1417:e:28b::2d3e
+Connecting to edelivery.oracle.com (edelivery.oracle.com)|184.26.250.202|:443... connected.
+HTTP request sent, awaiting response... 302 Moved Temporarily
+Location: http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz?AuthParam=1527060544_176621038c74dd0db38345f3ee832fa9 [following]
+--2018-05-23 15:27:04--  http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz?AuthParam=1527060544_176621038c74dd0db38345f3ee832fa9
+Connecting to download.oracle.com (download.oracle.com)|23.218.44.119|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 185540433 (177M) [application/x-gzip]
+Saving to: ‘jdk-8u131-linux-x64.tar.gz’
+
+jdk-8u131-linux-x64.tar.gz      73%[===================================>              ] 130.01M  11.5MB/s    eta 4s     jdk-8u131-linux-x64.tar.gz      75%[====================================>             ] 133.79M  12.3MB/s    eta 4s     jdk-8u131-linux-x64.tar.gz      77%[=====================================>            ] 138.01M  11.9MB/s    eta 3s     jdk-8u131-linux-x64.tar.gz      79%[======================================>           ] 140.01M  10.5MB/s    eta 3s     jdk-8u131-linux-x64.tar.gz      81%[=======================================>          ] 144.53M  11.5MB/s    eta 3s     jdk-8u131-linux-x64.tar.gz      83%[========================================>         ] 148.01M  11.4MB/s    eta 3s     jdk-8u131-linux-x64.tar.gz      85%[=========================================>        ] 151.47M  11.4MB/s    eta 2s     jdk-8u131-linux-x64.tar.gz      85%[=========================================>        ] 152.01M  11.4MB/s    eta 2s     jdk-8u131-linux-x64.tar.gz      87%[==========================================>       ] 154.01M  11.1MB/s    eta 2s     jdk-8u131-linux-x64.tar.gz      88%[===========================================>      ] 157.40M  11.0MB/s    eta 2s     jdk-8u131-linux-x64.tar.gz      91%[============================================>     ] 161.85M  11.3MB/s    eta 2s     jdk-8u131-linux-x64.tar.gz      91%[============================================>     ] 162.01M  10.3MB/s    eta 1s     jdk-8u131-linux-x64.tar.gz      93%[=============================================>    ] 165.52M  11.1MB/s    eta 1s     jdk-8u131-linux-x64.tar.gz      95%[==============================================>   ] 169.82M  11.2MB/s    eta 1s     jdk-8u131-linux-x64.tar.gz      98%[================================================> ] 174.01M  11.4MB/s    eta 1s     jdk-8u131-linux-x64.tar.gz     100%[=================================================>] 176.94M  11.7MB/s    in 15s     
+
+2018-05-23 15:27:20 (11.8 MB/s) - ‘jdk-8u131-linux-x64.tar.gz’ saved [185540433/185540433]
+

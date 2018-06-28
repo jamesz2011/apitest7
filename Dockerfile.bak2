@@ -1,0 +1,57 @@
+FROM registry.cn-hangzhou.aliyuncs.com/jamesz2011/apitestenv_bete1:latest
+MAINTAINER jamesz2011 <jamesz2011@126.com>
+
+RUN apt-get install sudo
+
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=1000
+ARG gid=1000
+
+
+ENV JENKINS_HOME /var/jenkins_home
+
+RUN groupadd -g ${gid} ${group} \
+    && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
+
+VOLUME /var/jenkins_home
+
+ENV JENKINS_VERSION="2.107.2"
+#RUN apt-get install sudo
+
+RUN wget -q -O -  https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
+RUN sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'  
+RUN apt-get update \
+    && apt-get install -y jenkins=${JENKINS_VERSION} 
+
+#RUN chmod 775 /ect/sudoers \
+ #   &&  echo " jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+  #  && . /etc/sudoers \
+   # && chown -R jenkins /var/lib/jenkins/  
+
+RUN ln /etc/init.d/jenkins /usr/bin/jenkins
+#RUN sysv-rc-conf jenkins on \
+RUN sysv-rc-conf jenkins on 
+#  && apt-get clean 
+#RUN bash -c "service jenkins start"
+
+
+RUN  apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin 
+
+
+WORKDIR /etc/init.d
+
+#RUN bash -c "./jenkins start"
+#RUN bash -c "ps -ef | grep jenkins"
+#CMD ["/usr/bin/jenkins", "start"]
+
+#COPY hellojenkins.sh hellojenkins.sh
+#RUN chmod +x hellojenkins.sh
+#ENTRYPOINT ["./hellojenkins.sh"]
+
+
+#COPY ./entrypoint.sh ./entrypoint.sh
+
+#ENTRYPOINT ["./entrypoint.sh"]  
+#CMD ["start"]  
+

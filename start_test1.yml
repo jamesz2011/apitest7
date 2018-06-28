@@ -1,0 +1,12 @@
+version: '3'
+services: 
+  test1_jenkins: 
+ 
+    image: registry.cn-hangzhou.aliyuncs.com/jamesz2011/apitestenv_bete2 
+    ports: 
+    - "7777:8080"
+    - "52000:50000"
+    restart: always 
+    tty: true
+    container_name: test1_jenkins 
+    command: ["jenkins","start"]

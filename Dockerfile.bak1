@@ -1,0 +1,108 @@
+FROM ubuntu:16.04
+MAINTAINER jamesz2011 <jamesz2011@126.com>
+
+COPY ./sources.list /opt
+WORKDIR /opt
+RUN cp -vf sources.list /etc/apt/
+
+RUN apt-get update \
+    && apt-get install -y apt-transport-https  vim lrzsz tzdata  wget curl  dos2unix openssh-server  gcc make \
+	&& service ssh restart
+#init ubuntu16.04
+COPY ./init_ubuntu1604_stable.sh /opt
+
+#RUN wget -P /opt http://git.chinafintech.cn/yecuihao/APITestEnv_shell/raw/master/init_ubuntu1604_stable.sh
+
+RUN dos2unix /opt/init_ubuntu1604_stable.sh
+RUN chmod a+x /opt/init_ubuntu1604_stable.sh
+RUN . /opt/init_ubuntu1604_stable.sh
+
+#install jdk 
+
+ENV JDK_VERSION="1.8.0_131"
+
+ENV	JAVA_DOWNLOAD_URL  http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
+
+RUN    cd /opt  \
+        && wget  --header "Cookie: oraclelicense=accept-securebackup-cookie"  ${JAVA_DOWNLOAD_URL} \
+         &&  tar -xzf /opt/jdk-8u131-linux-x64.tar.gz \
+       && rm /opt/jdk-8u131-linux-x64.tar.gz
+
+RUN ln -s ${JAVA_HOME}/bin/java /usr/local/bin/java \
+    && ln -s ${JAVA_HOME}/bin/javac   /usr/local/bin/javac
+
+
+ENV JAVA_HOME /opt/jdk${JDK_VERSION}
+ENV JRE_HOME ${JAVA_HOME}/jre
+ENV CLASSPATH .:${JAVA_HOME}/lib:${JRE_HOME}/lib
+ENV PATH ${JAVA_HOME}/bin:$PATH 
+
+#install maven
+
+ENV MAVEN_VERSION="3.5.3"
+ENV MAVEN_DOWNLOAD_URL  http://www-us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
+
+
+RUN cd /opt  \
+    && wget  ${MAVEN_DOWNLOAD_URL}   \
+    &&  tar -xzf apache-maven-$MAVEN_VERSION-bin.tar.gz \ 
+    && rm apache-maven-$MAVEN_VERSION-bin.tar.gz 
+
+RUN ln -s ${MAVEN_HOME}/bin/mvn /usr/local/bin/mvn
+
+
+ENV MAVEN_HOME /opt/apache-maven-$MAVEN_VERSION 
+ENV PATH ${MAVEN_HOME}/bin:$PATH
+RUN cp -fv ${MAVEN_HOME}/conf/settings.xml ${MAVEN_HOME}/conf/settings.xml.bak
+
+COPY ./settings.xml ${MAVEN_HOME}/conf/
+
+#install jmeter
+
+
+ENV JMETER_VERSION="3.3"
+
+ENV  JMETER_DOWNLOAD_URL   https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
+
+RUN  cd /opt \
+     && wget  ${JMETER_DOWNLOAD_URL}  \
+     && tar -xzf apache-jmeter-${JMETER_VERSION}.tgz \
+     && rm /opt/apache-jmeter-${JMETER_VERSION}.tgz
+
+
+RUN ln -s ${JMETER_HOME}/bin/jmeter /usr/local/bin/jmeter
+
+# Set global PATH such that "jmeter" command is found
+ENV JMETER_HOME /opt/apache-jmeter-${JMETER_VERSION} 
+ENV JMETER_BIN  ${JMETER_HOME}/bin 
+ENV PATH ${JMETER_BIN}:$PATH
+
+
+#install python3
+
+ENV PYTHON_VERSION="3.5.4"
+
+ENV PYTHON_DOWNLOAD_URL https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tar.xz
+ENV PYTHON_HOME /opt/python3/Python-${PYTHON_VERSION}
+RUN  cd /opt \
+	 && mkdir /opt/python3 \
+     && wget  ${PYTHON_DOWNLOAD_URL}  \
+     && tar xf Python-${PYTHON_VERSION}.tar.xz -C /opt/python3 
+
+RUN   cd /opt/python3/Python-${PYTHON_VERSION} \
+     && ./configure --prefix=${PYTHON_HOME} \ 
+     && make \
+     && make install  \
+     && ln -s ${PYTHON_HOME}/bin/python3.5  /usr/local/bin/python3 \
+     && rm /opt/Python-${PYTHON_VERSION}.tar.xz
+
+RUN chmod a+x ~/.bashrc \
+     && echo "alias python='python3'" >> ~/.bashrc \
+     && apt-get update && apt-get install -y  python3-pip \
+     && echo "alias pip='pip3'" >> ~/.bashrc 
+
+
+RUN apt-get clean
+
+EXPOSE 8080 50000
+
